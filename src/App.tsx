@@ -1,10 +1,17 @@
-import React from 'react';
+import { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { themes } from './styles/theme/themes';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [theme, setTheme] = useState('light');
+  const themeToggler = () => {
+    theme === 'light' ? setTheme('dark') : setTheme('light')
+  }
+
   return (
-    <div className="App">
+    <ThemeProvider theme={theme === 'light' ? themes.light : themes.dark}>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -19,7 +26,7 @@ function App() {
           Learn React
         </a>
       </header>
-    </div>
+    </ThemeProvider>
   );
 }
 
