@@ -1,3 +1,4 @@
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
@@ -8,6 +9,8 @@ const CurrentForecast = () => {
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const selectedCity = useAppSelector((state) => state.city.value);
 
+  const { pathname } = useLocation();
+
   return (
     <MainSection>
       {
@@ -16,7 +19,7 @@ const CurrentForecast = () => {
         <>
           <ForecastMain>
             <TextSection $size='medium'>{selectedCity}</TextSection>
-            <Cloudy className="cloudy" />
+            <Cloudy className="weatherIcon" />
             <TextSection $size='medium'>Clouds</TextSection>
             <ForecastDetails>
               <TextSection $size='medium'>Temp: 24°C</TextSection>
@@ -29,12 +32,16 @@ const CurrentForecast = () => {
           <SettingForecastType>
             <TextSection>Forecast</TextSection>
             <SettingForecastButtonWrapper>
-              <Button $isActive $height={36} $radius={8}>
-                Now
-              </Button>
-              <Button $height={36} $radius={8}>
-                5 Days
-              </Button>
+              <Link to="/">
+                <Button $isActive={pathname === '/'} $height={36} $radius={8}>
+                  Now
+                </Button>
+              </Link>
+              <Link to="/5days">
+                <Button $height={36} $radius={8}>
+                  5 Days
+                </Button>
+              </Link>
             </SettingForecastButtonWrapper>
           </SettingForecastType>
         </>
@@ -69,7 +76,7 @@ const ForecastMain = styled.div`
   gap: 16px;
   position: relative;
 
-  .cloudy {
+  .weatherIcon {
     width: 8rem;
     height: 8rem;
   }
@@ -96,15 +103,5 @@ const SettingForecastButtonWrapper = styled.div`
   gap: 12px;
   display: flex;
 `
-
-const PageWrapper = styled.div`
-  height: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`
-
 
 export default CurrentForecast
