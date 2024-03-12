@@ -1,8 +1,23 @@
 import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import { themes } from './styles/theme/themes';
-import logo from './logo.svg';
-import './App.css';
+import { CurrentForecast, FiveDaysForecast } from 'pages';
+import { GlobalStyle } from 'styles/theme/global-styles';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <CurrentForecast />,
+  },
+  {
+    path: "/5days",
+    element: <FiveDaysForecast />,
+  },
+]);
 
 function App() {
   const [theme, setTheme] = useState('light');
@@ -12,20 +27,8 @@ function App() {
 
   return (
     <ThemeProvider theme={theme === 'light' ? themes.light : themes.dark}>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <RouterProvider router={router} />      
+      <GlobalStyle />
     </ThemeProvider>
   );
 }
