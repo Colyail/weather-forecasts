@@ -1,12 +1,22 @@
 import cities from 'utils/Cities.json'
 import { Button } from './Button';
 import styled from 'styled-components';
-const CityButtonLayout = () => {
+
+interface CityButtonLayoutProps {
+  setSelectedCity: (city: string) => void;
+  selectedCity: string;
+}
+const CityButtonLayout = (props: CityButtonLayoutProps) => {
+  const {
+    setSelectedCity,
+    selectedCity,
+  } = props;
+
   return (
     <ButtonLayout>
       {
         cities.map((city, index) => (
-          <Button key={index}>
+          <Button key={index} onClick={() => setSelectedCity(city)} $isActive={selectedCity === city}>
             {city}
           </Button>
         ))

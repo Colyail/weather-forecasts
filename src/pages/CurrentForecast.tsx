@@ -1,15 +1,21 @@
+import { useState } from 'react';
 import CityButtonGroup from 'components/CityButtonLayout';
 import Header from 'components/Header';
 import styled from 'styled-components';
 
 const CurrentForecast = () => {
+  const [selectedCity, setSelectedCity] = useState<string>("");
   return (
     <PageWrapper>
       <Header />
       <MainSection>
-        <TextSection>Pick a city to see the full forecast</TextSection>
+        {
+          selectedCity === "" ?
+          <TextSection>Pick a city to see the full forecast</TextSection> :
+          <TextSection>{selectedCity}</TextSection>
+        }
       </MainSection>
-      <CityButtonGroup />
+      <CityButtonGroup setSelectedCity={setSelectedCity} selectedCity={selectedCity}/>
     </PageWrapper>
   )
 }

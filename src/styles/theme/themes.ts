@@ -12,6 +12,7 @@ const lightTheme = {
   text: colors.white,
   textSecondary: colors.blue,
   background: colors.black,
+  backgroundSecondary: colors.white,
   border: colors.blue,
   borderLight: colors.cyan,
 };
@@ -21,6 +22,7 @@ const darkTheme: Theme = {
   text: colors.black,
   textSecondary: colors.blue,
   background: colors.white,
+  backgroundSecondary: colors.black,
   border: colors.blue,
   borderLight: colors.cyan,
 };
