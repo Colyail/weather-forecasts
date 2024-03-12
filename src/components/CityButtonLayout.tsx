@@ -1,16 +1,14 @@
+import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'redux/store';
+import { setSelectedCity } from '../redux/citySlice';
 import cities from 'utils/Cities.json'
 import { Button } from './Button';
 import styled from 'styled-components';
 
-interface CityButtonLayoutProps {
-  setSelectedCity: (city: string) => void;
-  selectedCity: string;
-}
-const CityButtonLayout = (props: CityButtonLayoutProps) => {
-  const {
-    setSelectedCity,
-    selectedCity,
-  } = props;
+const CityButtonLayout = () => {
+  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const selectedCity = useAppSelector((state) => state.city.value);
+  const dispatch = useDispatch();
 
   return (
     <ButtonLayout>
@@ -18,7 +16,7 @@ const CityButtonLayout = (props: CityButtonLayoutProps) => {
         cities.map((city, index) => (
           <Button
             key={index}
-            onClick={() => setSelectedCity(city)}
+            onClick={() => dispatch(setSelectedCity(city))}
             $isActive={selectedCity === city}
             $height={56}
             $radius={4}

@@ -1,48 +1,45 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import Header from 'components/Header';
-import CityButtonGroup from 'components/CityButtonLayout';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { RootState } from 'redux/store';
 import { Button } from 'components/Button';
 import { ReactComponent as Cloudy } from 'assets/weather-cloudy.svg';
 
 const CurrentForecast = () => {
-  const [selectedCity, setSelectedCity] = useState<string>("");
+  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const selectedCity = useAppSelector((state) => state.city.value);
+
   return (
-    <PageWrapper>
-      <Header />
-      <MainSection>
-        {
-          selectedCity === "" ?
-          <TextSection $size='large'>Pick a city to see the full forecast</TextSection> :
-          <>
-            <ForecastMain>
-              <TextSection $size='medium'>{selectedCity}</TextSection>
-              <Cloudy className="cloudy" />
-              <TextSection $size='medium'>Clouds</TextSection>
-              <ForecastDetails>
-                <TextSection $size='medium'>Temp: 24°C</TextSection>
-                <TextSection $size='medium'>Feels Like: 24°C</TextSection>
-                <TextSection $size='medium'>Humidity: 66%</TextSection>
-                <TextSection $size='medium'>Sunrise: 06:28</TextSection>
-                <TextSection $size='medium'>Sunset: 18:58</TextSection>
-              </ForecastDetails>
-            </ForecastMain>
-            <SettingForecastType>
-              <TextSection>Forecast</TextSection>
-              <SettingForecastButtonWrapper>
-                <Button $isActive $height={36} $radius={8}>
-                  Now
-                </Button>
-                <Button $height={36} $radius={8}>
-                  5 Days
-                </Button>
-              </SettingForecastButtonWrapper>
-            </SettingForecastType>
-          </>
-        }
-      </MainSection>
-      <CityButtonGroup setSelectedCity={setSelectedCity} selectedCity={selectedCity}/>
-    </PageWrapper>
+    <MainSection>
+      {
+        selectedCity === "" ?
+        <TextSection $size='large'>Pick a city to see the full forecast</TextSection> :
+        <>
+          <ForecastMain>
+            <TextSection $size='medium'>{selectedCity}</TextSection>
+            <Cloudy className="cloudy" />
+            <TextSection $size='medium'>Clouds</TextSection>
+            <ForecastDetails>
+              <TextSection $size='medium'>Temp: 24°C</TextSection>
+              <TextSection $size='medium'>Feels Like: 24°C</TextSection>
+              <TextSection $size='medium'>Humidity: 66%</TextSection>
+              <TextSection $size='medium'>Sunrise: 06:28</TextSection>
+              <TextSection $size='medium'>Sunset: 18:58</TextSection>
+            </ForecastDetails>
+          </ForecastMain>
+          <SettingForecastType>
+            <TextSection>Forecast</TextSection>
+            <SettingForecastButtonWrapper>
+              <Button $isActive $height={36} $radius={8}>
+                Now
+              </Button>
+              <Button $height={36} $radius={8}>
+                5 Days
+              </Button>
+            </SettingForecastButtonWrapper>
+          </SettingForecastType>
+        </>
+      }
+    </MainSection>
   )
 }
 
