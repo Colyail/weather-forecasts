@@ -19,6 +19,13 @@ const CurrentForecast = () => {
               <TextSection $size='medium'>{selectedCity}</TextSection>
               <Cloudy className="cloudy" />
               <TextSection $size='medium'>Clouds</TextSection>
+              <ForecastDetails>
+                <TextSection $size='medium'>Temp: 24°C</TextSection>
+                <TextSection $size='medium'>Feels Like: 24°C</TextSection>
+                <TextSection $size='medium'>Humidity: 66%</TextSection>
+                <TextSection $size='medium'>Sunrise: 06:28</TextSection>
+                <TextSection $size='medium'>Sunset: 18:58</TextSection>
+              </ForecastDetails>
             </ForecastMain>
             <SettingForecastType>
               <TextSection>Forecast</TextSection>
@@ -60,13 +67,27 @@ const ForecastMain = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 560px;
   margin-bottom: 48px;
+  gap: 16px;
+  position: relative;
 
   .cloudy {
     width: 8rem;
     height: 8rem;
   }
 `
+
+const ForecastDetails = styled.div`
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  right: 0px;
+`
+
 const SettingForecastType = styled.div`
   display: flex;
   flex-direction: column;
