@@ -58,6 +58,7 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  
   .switch {
     width: 1.5rem;
     height: 1.5rem;

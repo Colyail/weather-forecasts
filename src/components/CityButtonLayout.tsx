@@ -16,7 +16,13 @@ const CityButtonLayout = (props: CityButtonLayoutProps) => {
     <ButtonLayout>
       {
         cities.map((city, index) => (
-          <Button key={index} onClick={() => setSelectedCity(city)} $isActive={selectedCity === city}>
+          <Button
+            key={index}
+            onClick={() => setSelectedCity(city)}
+            $isActive={selectedCity === city}
+            $height={56}
+            $radius={4}
+          >
             {city}
           </Button>
         ))
