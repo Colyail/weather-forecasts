@@ -8,6 +8,10 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
   }
 
+  #root {
+    height: 100%;
+  }
+
   body {
     font-family: 'Roboto', sans-serif;;
     background-color: ${props => props.theme.background};
