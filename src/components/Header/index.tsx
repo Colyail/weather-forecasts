@@ -1,11 +1,24 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as ThemeSwitchIcon } from 'assets/theme-switch.svg'
 
 const Header = () => {
+  const [time, setTime] = useState<Date>(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, 60000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
     <HeaderContainer>
       <Timer>
-        18:38
+        {time.getHours() + ":" + time.getMinutes()}
       </Timer>
       <ToolsWrapper>
         <ToolButton>
