@@ -93,7 +93,7 @@ const SettingsModal = (props: SettingsProps) => {
           </Button>
         </ButtonGroup>
         <TextSection>
-          {time.getHours() + ":" + time.getMinutes()}
+          {time.getHours().toString().padStart(2, '0') + ":" + time.getMinutes().toString().padStart(2, '0')}
         </TextSection>
       </ModalContent>
     </ModalContainer>

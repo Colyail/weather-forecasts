@@ -7,6 +7,12 @@ export enum UnitTypes {
   Standard = "Standard",
 }
 
+export enum UnitSymbols {
+  Imperial = "°F",
+  Metric = "°C",
+  Standard = "K",
+}
+
 export enum TimeFormat {
   Meridiem = "Meridiem",
   Full = "Full"
@@ -15,11 +21,13 @@ export enum TimeFormat {
 type initialStateType = {
   unitType: UnitTypes;
   timeFormat: TimeFormat;
+  unitSymbol?: UnitSymbols;
 }
 
 const initialState: initialStateType = {
   unitType: UnitTypes.Metric,
-  timeFormat: TimeFormat.Full
+  timeFormat: TimeFormat.Full,
+  unitSymbol: UnitSymbols.Metric,
 }
 
 export const settingsSlice = createSlice({
@@ -29,6 +37,11 @@ export const settingsSlice = createSlice({
     setSettings: (state, action: PayloadAction<initialStateType>) => {
       state.unitType = action.payload.unitType;
       state.timeFormat = action.payload.timeFormat;
+      state.unitSymbol = action.payload.unitType === UnitTypes.Imperial 
+        ? UnitSymbols.Imperial
+        : action.payload.unitType === UnitTypes.Metric
+        ? UnitSymbols.Metric : UnitSymbols.Standard
+
     }
   }
 });
