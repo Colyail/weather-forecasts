@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components';
+import { RootState } from 'redux/store';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
 import { themes } from './styles/theme/themes';
 import { CurrentForecast, FiveDaysForecast } from 'pages';
 import Header from 'components/Header';
+import { ThemeTypes } from './redux/themeSlice';
 import CityButtonGroup from 'components/CityButtonLayout';
 import { GlobalStyle } from 'styles/theme/global-styles';
 
@@ -24,22 +24,18 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [theme, setTheme] = useState('light');
-  const themeToggler = () => {
-    theme === 'light' ? setTheme('dark') : setTheme('light')
-  }
+  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const { theme } = useAppSelector((state) => state.theme);
 
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme === 'light' ? themes.light : themes.dark}>
-        <PageWrapper>
-          <Header />
-          <RouterProvider router={router} />
-          <GlobalStyle />
-          <CityButtonGroup/>
-        </PageWrapper>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={theme === ThemeTypes.Light ? themes.light : themes.dark}>
+      <PageWrapper>
+        <Header />
+        <RouterProvider router={router} />
+        <GlobalStyle />
+        <CityButtonGroup/>
+      </PageWrapper>
+    </ThemeProvider>
   );
 }
 

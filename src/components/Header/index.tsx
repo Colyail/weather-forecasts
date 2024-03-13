@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react';
+import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { RootState } from 'redux/store';
 import SettingsModal from 'components/SettingsModal';
 import TextSection from 'components/TextSection';
-import { ReactComponent as ThemeSwitchIcon } from 'assets/theme-switch.svg'
+import { setTheme, ThemeTypes } from '../../redux/themeSlice';
+import { ReactComponent as ThemeSwitchBlackIcon } from 'assets/theme-switch-black.svg'
+import { ReactComponent as ThemeSwitchWhiteIcon } from 'assets/theme-switch-white.svg'
 
 const Header = () => {
+  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const { theme } = useAppSelector((state) => state.theme)
+  const dispatch = useDispatch();
+
   const [time, setTime] = useState<Date>(new Date());
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
@@ -35,7 +43,11 @@ const Header = () => {
           Settings
         </ToolButton>
         <IconWrapper>
-          <ThemeSwitchIcon className='switch'/>
+          {
+            theme === ThemeTypes.Dark ?
+            <ThemeSwitchWhiteIcon className='switch'  onClick={() => dispatch(setTheme(ThemeTypes.Light))}/> :
+            <ThemeSwitchBlackIcon className='switch' onClick={() => dispatch(setTheme(ThemeTypes.Dark))}/>
+          }
         </IconWrapper>
       </ToolsWrapper>
       <SettingsModal time={time} isOpen={isOpenModal} setIsOpen={setIsOpenModal}/>
