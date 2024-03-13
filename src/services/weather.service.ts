@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { UnitTypes } from 'redux/settingsSlice';
+import { fiveDaysForecast } from 'utils/fiveDaysForecast';
 
 const GEO_API_URL = 'https://api.openweathermap.org/geo/1.0/direct?q=';
 const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather?';
@@ -33,7 +34,9 @@ class WeatherService {
     return axios
     .get(`${FORECAST_API_URL}lat=${lat}&lon=${lon}&units=${unit}&appid=${API_KEY}`)
     .then(response => {
-      return response.data;
+      const data = response.data;
+      const fiveDaysData = fiveDaysForecast(data);
+      return fiveDaysData;
     })
   }
 }

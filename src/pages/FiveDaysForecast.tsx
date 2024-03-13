@@ -1,18 +1,36 @@
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import { Button } from 'components/Button';
 import TextSection from 'components/TextSection';
-import { ReactComponent as Cloudy } from 'assets/weather-cloudy.svg';
-import { ReactComponent as Sunny } from 'assets/weather-sunny.svg';
+import weatherService from 'services/weather.service';
+import { MainForecast } from 'utils/fiveDaysForecast';
+import SelectIcon from 'components/SelectIcon';
 
-const CurrentForecast = () => {
+
+const FiveDaysForecast = () => {
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const selectedCity = useAppSelector((state) => state.city.value);
+  const { unitType, unitSymbol } = useAppSelector((state) => state.settings);
 
   const { pathname } = useLocation();
+
+  const [forecastData, setForeCastData] = useState<MainForecast[]>()
   
+  useEffect(() => {
+    if (selectedCity !== "") {
+      weatherService.getGeolocation(selectedCity)
+      .then((response: any) => {
+        weatherService.getFiveDaysForecasts(response.lat, response.lon, unitType)
+        .then((response: MainForecast[]) => {
+          setForeCastData(response);
+        })
+      })
+    }
+  }, [selectedCity, unitType]);
+
   return (
     <MainSection>
       {
@@ -21,36 +39,14 @@ const CurrentForecast = () => {
         <>
           <TextSection $size='medium'>{selectedCity}</TextSection>
           <FiveDaysForecastWrapper>
-            <FiveDaysForecastMain>
-              <TextSection>Fri</TextSection>
-              <Cloudy className="weatherIcon" />
-              <TextSection $size='medium'>Clouds</TextSection>
-              <TextSection $size='medium'>H: 31°C / L:24°C</TextSection>
-            </FiveDaysForecastMain>
-            <FiveDaysForecastMain>
-              <TextSection>Sat</TextSection>
-              <Cloudy className="weatherIcon" />
-              <TextSection $size='medium'>Clouds</TextSection>
-              <TextSection $size='medium'>H: 33°C / L:26°C</TextSection>
-            </FiveDaysForecastMain>
-            <FiveDaysForecastMain>
-              <TextSection>Sun</TextSection>
-              <Sunny className="weatherIcon" />
-              <TextSection $size='medium'>Sunny</TextSection>
-              <TextSection $size='medium'>H: 33°C / L:26°C</TextSection>
-            </FiveDaysForecastMain>
-            <FiveDaysForecastMain>
-              <TextSection>Mon</TextSection>
-              <Cloudy className="weatherIcon" />
-              <TextSection $size='medium'>Clouds</TextSection>
-              <TextSection $size='medium'>H: 28°C / L:24°C</TextSection>
-            </FiveDaysForecastMain>
-            <FiveDaysForecastMain>
-              <TextSection>Tue</TextSection>
-              <Cloudy className="weatherIcon" />
-              <TextSection $size='medium'>Clouds</TextSection>
-              <TextSection $size='medium'>H: 27°C / L:24°C</TextSection>
-            </FiveDaysForecastMain>
+            {forecastData?.map((item, index) => (
+              <FiveDaysForecastMain>
+                <TextSection>{item.day}</TextSection>
+                {SelectIcon(item.weather)}
+                <TextSection $size='medium'>{item.weather}</TextSection>
+                <TextSection $size='medium'>H: {item.highestTemp}{unitSymbol} / L:{item.lowestTemp}{unitSymbol}</TextSection>
+              </FiveDaysForecastMain>
+            ))}
           </FiveDaysForecastWrapper>
           <SettingForecastType>
             <SettingForecastButtonWrapper>
@@ -113,4 +109,4 @@ const SettingForecastButtonWrapper = styled.div`
   display: flex;
 `
 
-export default CurrentForecast
+export default FiveDaysForecast

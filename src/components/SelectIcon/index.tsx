@@ -11,19 +11,14 @@ const SelectIcon = (weather: string) => {
   switch (weather) {
     case "Clouds":
       return <Clouds className="weatherIcon" />;
-      break;
     case "Thunderstorm":
       return <Thunderstorm className="weatherIcon" />;
-      break;
     case "Drizzle":
       return <Drizzle className="weatherIcon" />;
-      break;
     case "Rain":
       return <Rain className="weatherIcon" />;
-      break;
     case "Snow":
       return <Snow className="weatherIcon" />;
-      break;
     case "Atmosphere":
     case "Mist":
     case "Smoke":
