@@ -40,10 +40,8 @@ const CurrentForecast = () => {
     if (selectedCity !== "") {
       weatherService.getGeolocation(selectedCity)
       .then((response: any) => {
-        console.log(JSON.stringify(response), '----- response -----');
         weatherService.getCurrentForecasts(response.lat, response.lon, unitType)
         .then((response: any) => {
-          console.log(JSON.stringify(response), '----- current weather info ----');
           setWeatherInfo({
             main: response.weather.main,
             temp: response.main.temp,
