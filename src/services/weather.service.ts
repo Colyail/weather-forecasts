@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { UnitTypes } from 'redux/settingsSlice';
 
-const GEO_API_URL = 'http://api.openweathermap.org/geo/1.0/direct?q=';
+const GEO_API_URL = 'https://api.openweathermap.org/geo/1.0/direct?q=';
 const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather?';
 const FORECAST_API_URL = 'https://api.openweathermap.org/data/2.5/forecast?';
 const API_KEY = process.env.REACT_APP_OPEN_WEATHERMAP_API_KEY;
