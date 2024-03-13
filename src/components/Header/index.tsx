@@ -5,12 +5,15 @@ import { RootState } from 'redux/store';
 import SettingsModal from 'components/SettingsModal';
 import TextSection from 'components/TextSection';
 import { setTheme, ThemeTypes } from '../../redux/themeSlice';
+import { TimeFormat } from '../../redux/settingsSlice';
+import { getFullTimeFormat, getMeridiemTimeFormat } from 'utils/getTimeFromData';
 import { ReactComponent as ThemeSwitchBlackIcon } from 'assets/theme-switch-black.svg'
 import { ReactComponent as ThemeSwitchWhiteIcon } from 'assets/theme-switch-white.svg'
 
 const Header = () => {
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-  const { theme } = useAppSelector((state) => state.theme)
+  const { theme } = useAppSelector((state) => state.theme);
+  const { timeFormat } = useAppSelector((state) => state.settings);
   const dispatch = useDispatch();
 
   const [time, setTime] = useState<Date>(new Date());
@@ -33,7 +36,11 @@ const Header = () => {
   return (
     <HeaderContainer>
       <TextSection>
-        {time.getHours().toString().padStart(2, '0') + ":" + time.getMinutes().toString().padStart(2, '0')}
+        {
+          timeFormat === TimeFormat.Full ?
+          getFullTimeFormat(time) :
+          getMeridiemTimeFormat(time)
+        }
       </TextSection>
       <ToolsWrapper>
         <ToolButton>

@@ -5,6 +5,7 @@ import { RootState } from 'redux/store';
 import { TimeFormat, UnitTypes, setSettings } from '../../redux/settingsSlice';
 import { Button } from 'components/Button';
 import TextSection from 'components/TextSection';
+import { getFullTimeFormat, getMeridiemTimeFormat } from 'utils/getTimeFromData';
 
 interface SettingsProps {
   isOpen: boolean;
@@ -93,7 +94,11 @@ const SettingsModal = (props: SettingsProps) => {
           </Button>
         </ButtonGroup>
         <TextSection>
-          {time.getHours().toString().padStart(2, '0') + ":" + time.getMinutes().toString().padStart(2, '0')}
+          {
+            timeFormat === TimeFormat.Full ?
+            getFullTimeFormat(time) :
+            getMeridiemTimeFormat(time)
+          }
         </TextSection>
       </ModalContent>
     </ModalContainer>

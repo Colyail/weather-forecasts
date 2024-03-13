@@ -23,6 +23,7 @@ const CurrentForecast = () => {
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
   const selectedCity = useAppSelector((state) => state.city.value);
   const { unitType, unitSymbol } = useAppSelector((state) => state.settings);
+  const { timeFormat } = useAppSelector((state) => state.settings);
   const { pathname } = useLocation();
 
   const [weatherInfo, setWeatherInfo] = useState<WeatherInfo>({
@@ -71,8 +72,8 @@ const CurrentForecast = () => {
               <TextSection $size='medium'>Temp: {weatherInfo.temp}{unitSymbol}</TextSection>
               <TextSection $size='medium'>Feels Like: {weatherInfo.feelLike}{unitSymbol}</TextSection>
               <TextSection $size='medium'>Humidity: {weatherInfo.humidity}%</TextSection>
-              <TextSection $size='medium'>Sunrise: {getHumanTime(weatherInfo.sunrise, weatherInfo.timezone)}</TextSection>
-              <TextSection $size='medium'>Sunset: {getHumanTime(weatherInfo.sunset, weatherInfo.timezone)}</TextSection>
+              <TextSection $size='medium'>Sunrise: {getHumanTime(weatherInfo.sunrise, weatherInfo.timezone, timeFormat)}</TextSection>
+              <TextSection $size='medium'>Sunset: {getHumanTime(weatherInfo.sunset, weatherInfo.timezone, timeFormat)}</TextSection>
             </ForecastDetails>
           </ForecastMain>
           <SettingForecastType>
