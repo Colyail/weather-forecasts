@@ -1,8 +1,8 @@
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'redux/store';
-import { setSelectedCity } from '../redux/citySlice';
+import { setSelectedCity } from '../../redux/citySlice';
 import cities from 'utils/Cities.json'
-import { Button } from './Button';
+import { Button } from '../Button';
 import styled from 'styled-components';
 
 const CityButtonLayout = () => {
@@ -18,8 +18,7 @@ const CityButtonLayout = () => {
             key={index}
             onClick={() => dispatch(setSelectedCity(city))}
             $isActive={selectedCity === city}
-            $height={56}
-            $radius={4}
+            $size='large'
           >
             {city}
           </Button>

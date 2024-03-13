@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import { Button } from 'components/Button';
+import TextSection from 'components/TextSection';
 import { ReactComponent as Cloudy } from 'assets/weather-cloudy.svg';
 import { ReactComponent as Sunny } from 'assets/weather-sunny.svg';
 
@@ -54,12 +55,12 @@ const CurrentForecast = () => {
           <SettingForecastType>
             <SettingForecastButtonWrapper>
               <Link to="/">
-                <Button $isActive={pathname === '/'} $height={36} $radius={8}>
+                <Button $isActive={pathname === '/'} $size='medium'>
                   Now
                 </Button>
               </Link>
               <Link to="/5days">
-                <Button $isActive={pathname === '/5days'} $height={36} $radius={8}>
+                <Button $isActive={pathname === '/5days'} $size='medium'>
                   5 Days
                 </Button>
               </Link>
@@ -79,14 +80,6 @@ const MainSection = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2px;
-`
-
-const TextSection = styled.span<{$size?: string;}>`
-  display: flex;
-  align-items: center;
-  font-size: ${props => props.$size === "large"? "44px" :  props.$size === "medium" ? "24px" : "20px"};
-  font-weight: bold;
-  text-align: center;
 `
 
 const FiveDaysForecastWrapper = styled.div`
