@@ -4,11 +4,10 @@ import styled from 'styled-components';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import { Button } from 'components/Button';
+import SelectIcon from 'components/SelectIcon';
 import TextSection from 'components/TextSection';
 import weatherService from 'services/weather.service';
 import { getHumanTime } from 'utils/getHumanTime';
-
-import { ReactComponent as Cloudy } from 'assets/weather-cloudy.svg';
 
 interface WeatherInfo {
   main: string,
@@ -43,7 +42,7 @@ const CurrentForecast = () => {
         weatherService.getCurrentForecasts(response.lat, response.lon, unitType)
         .then((response: any) => {
           setWeatherInfo({
-            main: response.weather.main,
+            main: response.weather[0].main,
             temp: response.main.temp,
             feelLike: response.main.feels_like,
             humidity: response.main.humidity,
@@ -64,7 +63,9 @@ const CurrentForecast = () => {
         <>
           <ForecastMain>
             <TextSection $size='medium'>{selectedCity}</TextSection>
-            <Cloudy className="weatherIcon" />
+            {
+              SelectIcon(weatherInfo.main)
+            }
             <TextSection $size='medium'>{weatherInfo.main}</TextSection>
             <ForecastDetails>
               <TextSection $size='medium'>Temp: {weatherInfo.temp}{unitSymbol}</TextSection>
