@@ -40,7 +40,7 @@ const FiveDaysForecast = () => {
           <TextSection $size='medium'>{selectedCity}</TextSection>
           <FiveDaysForecastWrapper>
             {forecastData?.map((item, index) => (
-              <FiveDaysForecastMain>
+              <FiveDaysForecastMain key={index}>
                 <TextSection>{item.day}</TextSection>
                 {SelectIcon(item.weather)}
                 <TextSection $size='medium'>{item.weather}</TextSection>
